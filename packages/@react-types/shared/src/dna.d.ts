@@ -284,3 +284,9 @@ export type BorderRadiusValue =
   | 'regular'
   | 'medium'
   | 'large';
+
+export type TextColorValue = 
+  | 'default'
+  | 'transparent'
+  | 'label-gray'
+  | ColorValue;
