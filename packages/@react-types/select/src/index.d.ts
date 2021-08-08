@@ -63,6 +63,9 @@ export interface SpectrumPickerProps<T> extends AriaSelectProps<T>, SpectrumLabe
   direction?: 'bottom' | 'top',
   /** Width of the menu. */
   menuWidth?: DimensionValue,
+  /** max height of the menu. */
+  menuMaxHeight?: DimensionValue,
+  insideLabel?: string,
   /** Whether the element should receive focus on render. */
   autoFocus?: boolean
 }

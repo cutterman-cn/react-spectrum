@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import {BackgroundColorValue, BorderColorValue, BorderRadiusValue, BorderSizeValue, ColorValue, DimensionValue, Direction, Responsive, ResponsiveProp, StyleProps, ViewStyleProps} from '@react-types/shared';
+import {BackgroundColorValue, BorderColorValue, BorderRadiusValue, BorderSizeValue, ColorValue, DimensionValue, Direction, Responsive, ResponsiveProp, StyleProps, TextColorValue, ViewStyleProps} from '@react-types/shared';
 import {CSSProperties, HTMLAttributes} from 'react';
 import {useBreakpoint} from './BreakpointProvider';
 import {useLocale} from '@react-aria/i18n';
@@ -60,7 +60,8 @@ export const baseStyleProps: StyleHandlers = {
   gridColumnStart: ['gridColumnStart', passthroughStyle],
   gridRow: ['gridRow', passthroughStyle],
   gridRowEnd: ['gridRowEnd', passthroughStyle],
-  gridRowStart: ['gridRowStart', passthroughStyle]
+  gridRowStart: ['gridRowStart', passthroughStyle],
+  color: ['color', textColorValue]
 };
 
 export const viewStyleProps: StyleHandlers = {
@@ -150,6 +151,10 @@ function colorValue(value: ColorValue, type: ColorType = 'default') {
 }
 
 function backgroundColorValue(value: BackgroundColorValue) {
+  return `var(--spectrum-alias-background-color-${value}, ${colorValue(value as ColorValue, 'background')})`;
+}
+
+function textColorValue(value: TextColorValue) {
   return `var(--spectrum-alias-background-color-${value}, ${colorValue(value as ColorValue, 'background')})`;
 }
 

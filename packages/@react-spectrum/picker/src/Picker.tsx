@@ -12,6 +12,7 @@
 
 import AlertMedium from '@spectrum-icons/ui/AlertMedium';
 import ChevronDownMedium from '@spectrum-icons/ui/ChevronDownMedium';
+import Add from '@spectrum-icons/workflow/Add';
 import {
   classNames,
   dimensionValue,
@@ -24,7 +25,7 @@ import {
 } from '@react-spectrum/utils';
 import {DismissButton, useOverlayPosition} from '@react-aria/overlays';
 import {DOMRef, DOMRefValue, FocusableRefValue, LabelPosition} from '@react-types/shared';
-import {FieldButton} from '@react-spectrum/button';
+import {ActionButton, FieldButton} from '@react-spectrum/button';
 import {FocusScope} from '@react-aria/focus';
 import {HiddenSelect, useSelect} from '@react-aria/select';
 // @ts-ignore
@@ -45,6 +46,10 @@ import {useFormProps} from '@react-spectrum/form';
 import {useMessageFormatter} from '@react-aria/i18n';
 import {useProvider, useProviderProps} from '@react-spectrum/provider';
 import {useSelectState} from '@react-stately/select';
+import { Flex } from '../../layout';
+import {Button} from '@react-spectrum/button';
+import { TextField } from '../../textfield';
+import { View } from '../../view';
 
 function Picker<T extends object>(props: SpectrumPickerProps<T>, ref: DOMRef<HTMLDivElement>) {
   props = useSlotProps(props, 'picker');
@@ -65,6 +70,8 @@ function Picker<T extends object>(props: SpectrumPickerProps<T>, ref: DOMRef<HTM
     isRequired,
     necessityIndicator,
     menuWidth,
+    menuMaxHeight,
+    insideLabel,
     name,
     autoFocus
   } = props;
@@ -72,6 +79,8 @@ function Picker<T extends object>(props: SpectrumPickerProps<T>, ref: DOMRef<HTM
   let {styleProps} = useStyleProps(props);
   let state = useSelectState(props);
   let domRef = useDOMRef(ref);
+  let [newItem, setNewItem] = React.useState("");
+
 
   let popoverRef = useRef<DOMRefValue<HTMLDivElement>>();
   let unwrappedPopoverRef = useUnwrapDOMRef(popoverRef);
@@ -133,6 +142,14 @@ function Picker<T extends object>(props: SpectrumPickerProps<T>, ref: DOMRef<HTM
         UNSAFE_style={{maxHeight: 'inherit'}}
         isLoading={isLoadingMore}
         onLoadMore={props.onLoadMore} />
+      <Flex direction="row" justifyContent="space-between" margin="10px">
+          <TextField type="text" height="32px" width="166px" value={newItem} onChange={setNewItem}></TextField>
+          <View backgroundColor="celery-400" marginStart="10px">
+                  <ActionButton onPress={() => {if (props.onItemAdd){props.onItemAdd(newItem)}}} isQuiet>
+                      <Add aria-label="add" size="S" />
+                  </ActionButton>
+              </View>
+      </Flex>
       <DismissButton onDismiss={() => state.close()} />
     </FocusScope>
   );
@@ -167,6 +184,9 @@ function Picker<T extends object>(props: SpectrumPickerProps<T>, ref: DOMRef<HTM
     // Always have a minimum width of the button width. When quiet, there is an extra offset to add.
     // Not using style props for this because they don't support `calc`.
     let width = isQuiet ? null : buttonWidth;
+    if (menuMaxHeight) {
+        overlayProps.style.maxHeight = menuMaxHeight;
+    }
     let style = {
       ...overlayProps.style,
       width: menuWidth ? dimensionValue(menuWidth) : width,
@@ -190,7 +210,17 @@ function Picker<T extends object>(props: SpectrumPickerProps<T>, ref: DOMRef<HTM
 
   let contents = state.selectedItem ? state.selectedItem.rendered : placeholder;
   if (typeof contents === 'string') {
-    contents = <Text>{contents}</Text>;
+      if (insideLabel) {
+          contents = (
+              <Flex direction="row">
+                  <Text marginEnd="size-160">{insideLabel}</Text>
+                  <Text>{contents}</Text>
+              </Flex>
+          );
+      } else {
+          contents = <Text>{contents}</Text>;
+      }
+
   }
 
   let picker = (

@@ -21,6 +21,7 @@ export interface SingleSelection {
   defaultSelectedKey?: Key,
   /** Handler that is called when the selection changes. */
   onSelectionChange?: (key: Key) => any
+  onItemAdd?: (key: Key) => any
 }
 
 export type SelectionMode = 'none' | 'single' | 'multiple';

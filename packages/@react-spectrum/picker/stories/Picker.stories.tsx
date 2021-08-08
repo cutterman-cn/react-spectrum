@@ -54,6 +54,32 @@ let withSection = [
 
 storiesOf('Picker', module)
   .add(
+      'many items to scroll',
+      () => (
+          <Picker menuMaxHeight="200px" insideLabel="项目" onSelectionChange={(key) => {console.log(key)}} onItemAdd={(key) => {console.log(`add item[${key}]`)}}>
+              <Item key="rarely">Short</Item>
+              <Item key="sometimes">Normal</Item>
+              <Item key="always">This item is very long and word wraps poorly</Item>
+              <Item key="rarely1">Short1</Item>
+              <Item key="rarely2">Short2</Item>
+              <Item key="rarely3">Short3</Item>
+              <Item key="sometimes4">Normal4</Item>
+              <Item key="sometimes5">Normal5</Item>
+              <Item key="sometimes6">Normal6</Item>
+              <Item key="sometimes7">Normal4</Item>
+              <Item key="sometimes8">Normal4</Item>
+              <Item key="sometimes9">Normal4</Item>
+              <Item key="sometimes10">Normal5</Item>
+              <Item key="sometimes11">Normal6</Item>
+              <Item key="sometimes12">Normal5</Item>
+              <Item key="sometimes13">Normal6</Item>
+              <Item key="sometimes14">Normal5</Item>
+              <Item key="sometimes15">Normal6</Item>
+          </Picker>
+
+      )
+  )
+  .add(
     'default',
     () => (
       <Picker label="Test" onSelectionChange={action('selectionChange')}>
@@ -431,9 +457,17 @@ storiesOf('Picker', module)
   .add(
     'isOpen (controlled)',
     () => (
-      <Picker label="Test" isOpen onOpenChange={action('onOpenChange')} onSelectionChange={action('selectionChange')}>
+      <Picker label="Test" menuMaxHeight="200px" isOpen onOpenChange={action('onOpenChange')} onSelectionChange={action('selectionChange')}>
         <Item>One</Item>
         <Item>Two</Item>
+        <Item>Three</Item>
+        <Item>Two</Item>
+        <Item>Two</Item>
+        <Item>Two</Item>
+        <Item>Two</Item>
+        <Item>Three</Item>
+        <Item>Three</Item>
+        <Item>Three</Item>
         <Item>Three</Item>
       </Picker>
     )

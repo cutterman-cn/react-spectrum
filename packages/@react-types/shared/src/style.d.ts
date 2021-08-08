@@ -108,6 +108,9 @@ export interface StyleProps {
   /** The right position for the element. See [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/right). Consider using `start` instead for RTL support. */
   right?: Responsive<DimensionValue>,
 
+  /** The color for the element(text only). */
+  color?: Responsive<TextColorValue>,
+
   /** Hides the element. */
   isHidden?: Responsive<boolean>
 }
@@ -117,8 +120,6 @@ export interface StyleProps {
 export interface ViewStyleProps extends StyleProps {
   /** The background color for the element. */
   backgroundColor?: Responsive<BackgroundColorValue>,
-  /** The color for the element(text only). */
-  color?: Responsive<TextColorValue>,
 
   /** The width of the element's border on all four sides. See [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width). */
   borderWidth?: Responsive<BorderSizeValue>,
